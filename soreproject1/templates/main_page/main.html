@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>MAIN PAGE</title>
+    <link rel="stylesheet" href="/static/css/base.css">
+</head>
+<body>
+
+<p><a href="/">MAIN</a></p>
+<a href="{% url "players:index"  %}">Players</a><br><br>
+<form action="{% url "players:player_search" %}" method="get">
+    {{ form }}
+    <br><br>
+    <input type="submit" value="Search">
+</form><br>
+</body>
+</html>

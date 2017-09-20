@@ -1,0 +1,60 @@
+{% load players_extras %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Players</title>
+    {% load staticfiles %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script src="{% static "js/rango-jquery.js" %}"></script>
+</head>
+<body>
+
+<p><a href="{% url 'main_page:main_pa' %}">MAIN</a></p>
+<form action="{% url "players:player_search" %}" method="get">
+    {{ form }}
+    <br><br>
+    <input type="submit" value="Search">
+</form>
+<div>
+    <ul>
+        {% for sub_dict in updated_param_list %}
+            <li style="display:inline-block">{{ sub_dict.title }}
+            <ul>
+            {% for param in sub_dict.values %}
+                <li><a href="{{ param }}">{{ sub_dict.sub_title|index:forloop.counter0 }}</a></li>
+                {% endfor %}
+            </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+full path = {{ full_path }}
+
+{% for player in object_list %}
+    {# Each "player" is a Player model object. #}
+    <hr>
+    <li><a href="{% url 'players:player_detail' player.id %}">{{ player.firstName }} {{ player.lastName }} {{ player.position }} {{ player.rating }}</a></li>
+    </hr>
+{% endfor %}
+</br>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="{{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+</body>
+</html>

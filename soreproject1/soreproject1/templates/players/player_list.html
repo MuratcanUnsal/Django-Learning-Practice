@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>MAIN PAGE</title>
+</head>
+<body>
+<p><a href="/">MAIN</a></p>
+<a href="{% url "players:index" %}">Players</a><br><br>
+<form action="{% url "players:player_search" %}" method="get">
+    {{ form }}
+    <br><br>
+    <input type="submit" value="Search">
+
+</form><br>
+
+<hr>
+
+{% if players %}
+    {% for player in players %}
+        {{ player.firstName }} {{ player.lastName }} {{ player.rating }}
+        <hr/>
+    {% endfor %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?{{ search_request }}&page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?{{ search_request }}&page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endif %}
+</body>
+</html>
