@@ -35,14 +35,12 @@ class IndexView(ListView):
 
 
     def get_context_data(self, **kwargs):
-        # form u eklemek icin cekilen dert...
-        # aynı bu sekilde paginator objesini class view in de yapmaya calis.
-        # update edilmesi gereken class context dataya gene aynı veriyi atilir.
+
         context = super(ListView, self).get_context_data(**kwargs)
         form = PlayerSearchForm("")
         context["form"] = form
 
-        #query string üzerinden <a href="#"> lerin linkini güncelleme ye hazırlık
+        
         x = self.request.META["QUERY_STRING"]
         context["full_path"] = x
 

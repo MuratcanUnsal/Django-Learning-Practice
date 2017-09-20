@@ -14,9 +14,6 @@ class Command(BaseCommand):
 
         startTime = datetime.now()
 
-        #sayfalari döndür
-        #kac sayfa geldigini kontrol et toplam oyuncu sayısıyla dbdeki sayıyı karşılaştır aynıysa update yok.
-
         total = self.req_total()
         total_pages = total[0]
         total_players = total[1]
@@ -32,12 +29,10 @@ class Command(BaseCommand):
                 json_to_db.append(page_json["items"][i])
 
 
-            #database e at. sayfa (k) 50 ye bölümünden kalan 0 ise eşitse ve 0 dan büyükse
-            # sil ve database at. ya da son sayfaya ulasinca o ana kadar
-            #toplanan ları at database
+          
             if (k>0 and k % 50 == 0) or k == total_pages:
                 for turn in range(len(json_to_db)):
-                    #self.stdout.write(str(json_to_db[turn]))
+                    
                     player_prop = json_to_db[turn]
 
                     rol = player_prop["position"]
@@ -129,7 +124,7 @@ class Command(BaseCommand):
 
     def req_json(self, page_no):
 
-         # reqCIjson istenilen pageNo ya request gönderip json olarak döndürür.
+       
 
         req = r.get(
             "http://www.easports.com/uk/fifa/ultimate-team/api/fut/item?jsonParamObject={%22page%22:%20" + str(page_no) + "}")
@@ -138,7 +133,7 @@ class Command(BaseCommand):
 
     def req_total(self):
 
-        # total_page sayısı icin request gönderilir sayı int olarak döner.
+       
 
         req = r.get("http://www.easports.com/uk/fifa/ultimate-team/api/fut/item?jsonParamObject={'page': 1")
         respon = [int(req.json()["totalPages"]), int(req.json()["totalResults"])]
